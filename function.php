@@ -97,7 +97,7 @@ if (isset($_POST['updatebuku'])) {
     }
 }
 
-//Hapus 
+//Hapus buku
 function delete($idb)
 {
 	global $connection;
@@ -105,4 +105,46 @@ function delete($idb)
 	return mysqli_affected_rows($connection);
 }
 
+
+//update penerbit
+if (isset($_POST['updatepenerbit'])) {
+    // Pastikan untuk menginisialisasi variabel $idb jika belum ada
+    $idp = $_POST['idp']; // Asumsikan ada input dengan nama 'id_bpenerbitc'
+  
+    // Ambil nilai lain dari form
+    $kode_penerbit = $_POST['kode_penerbit'];
+    $nama = $_POST['nama'];
+    $alamat = $_POST['alamat'];
+    $kota = $_POST['kota'];
+    $telepon = $_POST['telepon'];
+  
+    // Lakukan query update dengan menggunakan prepared statement untuk menghindari SQL injection
+    $update = mysqli_prepare($connection, "UPDATE penerbit SET kode_penerbit=?, nama=?, alamat=?, kota=?, telepon=? WHERE id_penerbit=?");
+  
+    // Bind parameter dengan tipe data yang sesuai
+    mysqli_stmt_bind_param($update, 'sssssi', $kode_penerbit, $nama, $alamat, $kota, $telepon, $idp);
+  
+    // Jalankan query
+    mysqli_stmt_execute($update);
+  
+    // Periksa apakah query berhasil dieksekusi
+    if (mysqli_stmt_affected_rows($update) > 0) {
+      // Jika berhasil, tampilkan pesan sukses
+      echo "Data penerbit berhasil diperbarui!";
+    } else {
+      // Jika gagal, tampilkan pesan error
+      echo "Gagal memperbarui data penerbit: " . mysqli_stmt_error($update);
+    }
+  
+    // Tutup statement
+    mysqli_stmt_close($update);
+  }
+
+  //Hapus 
+function delete2($idp)
+{
+	global $connection;
+	mysqli_query($connection, "DELETE FROM penerbit WHERE id_penerbit = $idp");
+	return mysqli_affected_rows($connection);
+}
 ?>

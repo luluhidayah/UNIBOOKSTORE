@@ -150,82 +150,81 @@ if (isset($_POST["addnewbuku"] ) )
 
 
                         <div class="card mb-5">
-                            <div class="card-header">
-                                <!-- Button to Open the Modal -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myForm">
+                        <div class="card-header">
+                            <!-- Button to Open the Modal -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2">
                                 Tambah Penerbit
                             </button>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th>ID Penerbit</th>
-                                                <th>Nama</th>
-                                                <th>Alamat</th>
-                                                <th>Kota</th>
-                                                <th>Telepon</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>ID Penerbit</th>
+                                            <th>Nama</th>
+                                            <th>Alamat</th>
+                                            <th>Kota</th>
+                                            <th>Telepon</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                         <?php
-                                            $ambilsemuadatabuku = mysqli_query($connection, "select * from penerbit");
-                                            while($data=mysqli_fetch_array($ambilsemuadatabuku)){
-                                                $kode_penerbit = $data['kode_penerbit'];
-                                                $nama = $data['nama'];
-                                                $alamat= $data['alamat'];
-                                                $kota = $data['kota'];
-                                                $telepon = $data['telepon'];
-                                        
-                                            ?>
+                                        $ambilsemuadatapenerbit = mysqli_query($connection, "select * from penerbit");
+                                        while ($data = mysqli_fetch_array($ambilsemuadatapenerbit)) {
+                                            $kode_penerbit = $data['kode_penerbit'];
+                                            $nama = $data['nama'];
+                                            $alamat = $data['alamat'];
+                                            $kota = $data['kota'];
+                                            $telepon = $data['telepon'];
+                                            $idp = $data['id_penerbit'];
+
+                                        ?>
                                             <tr>
-                                                <td><?=$kode_penerbit?></td>
-                                                <td><?=$nama?></td>
-                                                <td><?=$alamat?></td>
-                                                <td><?=$kota?></td>
-                                                <td><?=$telepon?></td>
+                                                <td><?= $kode_penerbit ?></td>
+                                                <td><?= $nama ?></td>
+                                                <td><?= $alamat ?></td>
+                                                <td><?= $kota ?></td>
+                                                <td><?= $telepon ?></td>
                                                 <td>
-                                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit">Edit</button>
-                                                <input type="hidden" name="idbuku" value="<?=$idb;?>">
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete">Delete</button>
-                                            </td>
-                                            </tr> 
-                                                <!-- The Modal -->
-                                                <div class="modal fade" id="edit<?=$idb;?>">
-                                                    <div class="modal-dialog">
+                                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit2<?= $idp; ?>">Edit</button>
+                                                    <a href="delete2.php?id_penerbit=<?= $data['id_penerbit']; ?>" onclick="return confirm('Apakah Yakin ingin Menghapus Data ini?')" class="btn" style="background-color: #FE6383; color: #fff; border-radius:12px;">HAPUS</a>
+                                                </td>
+                                            </tr>
+                                            <!-- The Modal -->
+                                            <div class="modal fade" id="edit2<?= $idp; ?>">
+                                                <div class="modal-dialog">
                                                     <div class="modal-content">
-                                                    
+
                                                         <!-- Modal Header -->
                                                         <div class="modal-header">
-                                                        <h4 class="modal-title">Edit Buku</h4>
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            <h4 class="modal-title">Edit Penerbit</h4>
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                         </div>
-                                                        
+
                                                         <!-- Modal body -->
                                                         <form method="post">
-                                                        <div class="modal-body">
-                                                        <input type ="text" name="kode_buku" value="<?=$kode_buku;?>" placeholder="ID Buku" class="from-control" require_once>
-                                                        <br>
-                                                        <input type ="text" name="kategori" value="<?=$kategori;?>" placeholder="Kategori" class="from-control" require_once>
-                                                        <br>
-                                                        <input type ="text" name="nama_buku" value="<?=$nama_buku;?>" placeholder="Nama Buku" class="from-control" require_once>
-                                                        <br>
-                                                        <input type ="num" name="harga"  value="<?=$harga;?>" placeholder="Harga" class="from-control" require_once>
-                                                        <br>
-                                                        <input type ="num" name="stok" value="<?=$harga;?>" placeholder="Stok" class="from-control" require_once>
-                                                        <br>
-                                                        <input type ="text" name="penerbit" value="<?=$penerbit;?>" placeholder="Penerbit" class="from-control" require_once>
-                                                        <br>
-                                                            <button type="submit" class="btn btn-primary" name="updatebuku">Submit</button>
-                                                        </div>
-                                                        </form>  
+                                                            <div class="modal-body">
+                                                                <input type="text" name="kode_penerbit" value="<?= $kode_penerbit; ?>" placeholder="ID Penerbit" class="from-control" require_once>
+                                                                <br>
+                                                                <input type="text" name="nama" value="<?= $nama; ?>" placeholder="Nama" class="from-control" require_once>
+                                                                <br>
+                                                                <input type="text" name="alamat" value="<?= $alamat; ?>" placeholder="Alamat" class="from-control" require_once>
+                                                                <br>
+                                                                <input type="num" name="kota" value="<?= $kota; ?>" placeholder="Kota" class="from-control" require_once>
+                                                                <br>
+                                                                <input type="num" name="telepon" value="<?= $telepon; ?>" placeholder="Telepon" class="from-control" require_once>
+                                                                <br>
+                                                                <input type="hidden" name="idp" value="<?= $idp; ?>">
+                                                                <button type="submit" class="btn btn-primary" name="updatepenerbit">Submit</button>
+                                                            </div>
+                                                        </form>
                                                     </div>
-                                                    </div>
+                                                </div>
 
                                             <?php
-                                            };
+                                        };
                                             ?>
                                         </tbody>
                                     </table>
@@ -294,6 +293,35 @@ if (isset($_POST["addnewbuku"] ) )
         </div>
         </form>  
 
+
+        <!-- The Modal -->
+<div class="modal fade" id="myModal2">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Tambah Penerbit</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <form method="post">
+                <div class="modal-body">
+                    <input type="text" name="kode_penerbit" placeholder="Kode Penerbit" class="from-control" require_once>
+                    <br>
+                    <input type="text" name="nama" placeholder="Nama" class="from-control" require_once>
+                    <br>
+                    <input type="text" name="alamat" placeholder="Alamat" class="from-control" require_once>
+                    <br>
+                    <input type="text" name="kota" placeholder="Kota" class="from-control" require_once>
+                    <br>
+                    <input type="num" name="telepon" placeholder="Telepon" class="from-control" require_once>
+                    <br>
+
+                    <button type="submit" class="btn btn-primary" name="addnewpenerbit">Submit</button>
+                </div>
+            </form>
         
       </div>
     </div>
